@@ -81,3 +81,39 @@ WHERE department_id IN (60,70,80,90);
 
 -- 3. job_id가 ad_pres, pu_clerk인 사원들의 employee_id, first_name,last_name,department_id, job_id를 조회하시오, 단, 사원명은 first_name과 last_name을 연결하여 출력한다
 SELECT employee_id, CONCAT(first_name,CONCAT(' ',last_name)),department_id, JOB_ID FROM employees WHERE job_id IN('AD_PRES','PU_CLERK');
+
+-- ppt 4번 문제
+SELECT last_name,salary,
+CASE WHEN salary < 2000 THEN 0
+WHEN salary < 4000 THEN 0.09
+WHEN salary < 6000 THEN 0.2
+WHEN salary < 8000 THEN 0.3
+WHEN salary < 10000 THEN 0.4
+WHEN salary < 12000 THEN 0.42
+WHEN salary < 14000 THEN 0.44
+ELSE 0.45 END AS TAX_RATE FROM employees;
+
+--join 실습
+-- 자신의 담당 매니저의 고용일보다 빠른 입사자를 찾아 HIRE_DATE, LAST_NAME, MANAGER_ID를 출력하시오
+--(EMPLOYEES SELF JOIN) - 37행
+
+
+
+-- 도시 이름이 T로 시작하는 지역에 사는 사원들의 사번, LAST_NAME, 부서번호 조회
+-- (EMPLOYEES 의 DEPARTMENT_ID 와 DEPARTMENTS의 DEPARTMENT_ID 연결 후 DEPARTMENTS의 LOCATION_ID 와 LOCATION의 LOCATION_ID 연결) -2행
+
+
+-- 위치 ID가 1700인 동일한 사원들의 EMPLOYEE_ID, LAST_NAME, DEPARTMENT_ID, SALARY 조회 (EMPLOYEES 와 DEPARTMENTS 조인) - 
+
+
+-- DEPARTMENT_NAME, LOCATION_ID, 각 부서별 사원수, 각 부서별 평균 연봉 조회
+
+
+-- EXECUTIVE 부서에 근무하는 모든 사원들의 DEPARTMENT_ID, LAST_NAME, JOB_ID 조회
+-- (EMPLOYEES, DEPARTMENT 조인)
+
+-- 기존의 직업을 여전히 가지고 있는 사원들의 사번 및 JOB_ID 조회
+-- (EMPLOYEES, JOB_HISTORY 조인)
+
+-- 각 사원별 소속 부서에서 자신보다 늦게 고용되었으나 보다 많은 연봉을 받는 사원이 존재하는 모든 사원들의 LAST_NAME을 조회
+-- (EMPLOYEES SELF JOIN)

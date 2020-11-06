@@ -270,7 +270,32 @@ SELECT empno,ename,job,sal,DECODE(JOB, 'MANAGER', SAL*1.1;, 'SALESMAN',SAL*1.05,
 SELECT empno,ename,job,sal,CASE
     WHEN COMM IS NULL THEN '해당사항없음'
     WHEN COMM IS NULL THEN '해당사항없음'
-    WHEN COMM IS NULL THEN '해당사항없음'
+    WHEN COMM IS NULL THEN '해당사항없음';
     
     -- 위에꺼 2개 다시
 --------------------------------------------------------------------------------------
+
+-- ppt 오라클 단일행 함수(18p)
+ SELECT empno,ename,sal,ROUND(sal/21.5),2) as day_pay,
+    ROUND((sal/21.5/8),1) as time_pay
+    FROM emp;
+    
+SELECT empno,ename,hiredate,NEXT_DAY(ADD_MONTHS(hiredate,3),'월요일') as R_JOB,
+    NVL(TO_CHAR(comm),'N/A') AS COMM FROM emp;
+    
+SELECT SUBSTR(TO_CHAR(mgr),1,2) FROM emp;
+
+SELECT empno,ename,mgr,DECODE(SUBSTR(TO_CHAR(mgr),1,2),
+    null, '0000';
+    '75', '5555',
+    '76', '6666',
+    '77', '7777',
+    '78', '8888',
+    TO_CHAR(mgr)) AS CHG_MGR FROM emp;
+    
+-- 실습 sql 작성 ppt 28
+SELECT deptno, AVG_SAL, MAX_SAL, MIN_SAL, CNT FROM emp;
+
+--SELECT * FROM emp WHERE mgr is null;
+
+
