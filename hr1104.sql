@@ -102,18 +102,37 @@ ELSE 0.45 END AS TAX_RATE FROM employees;
 -- 도시 이름이 T로 시작하는 지역에 사는 사원들의 사번, LAST_NAME, 부서번호 조회
 -- (EMPLOYEES 의 DEPARTMENT_ID 와 DEPARTMENTS의 DEPARTMENT_ID 연결 후 DEPARTMENTS의 LOCATION_ID 와 LOCATION의 LOCATION_ID 연결) -2행
 
+SELECT employee_id, LAST_NAME, d.department_id FROM EMPLOYEES E,departments D,locations L 
+WHERE E.department_ID = d.department_id AND D.LOCATION_ID = L.LOCATION_ID AND CITY LIKE 'T%';
 
 -- 위치 ID가 1700인 동일한 사원들의 EMPLOYEE_ID, LAST_NAME, DEPARTMENT_ID, SALARY 조회 (EMPLOYEES 와 DEPARTMENTS 조인) - 
 
+SELECT employee_id, LAST_NAME, d.department_id, SALARY FROM EMPLOYEES E,departments D
+WHERE E.department_ID = d.department_id AND D.LOCATION_ID = 1700;
 
 -- DEPARTMENT_NAME, LOCATION_ID, 각 부서별 사원수, 각 부서별 평균 연봉 조회
 
+SELECT d.department_NAME,d.location_id, COUNT(EMPLOYEE_ID),ROUND(AVG(SALARY),2) FROM EMPLOYEES E,departments D
+WHERE E.department_ID = d.department_id
+GROUP BY D.DEPARTMENT_NAME, LOCATION_ID;
 
 -- EXECUTIVE 부서에 근무하는 모든 사원들의 DEPARTMENT_ID, LAST_NAME, JOB_ID 조회
 -- (EMPLOYEES, DEPARTMENT 조인)
 
+SELECT LAST_NAME, D.DEPARTMENT_ID, JOB_ID
+FROM EMPLOYEES E,departments D
+WHERE E.department_ID = d.department_id AND D.DEPARTMENT_NAME = 'Executive';
+
 -- 기존의 직업을 여전히 가지고 있는 사원들의 사번 및 JOB_ID 조회
 -- (EMPLOYEES, JOB_HISTORY 조인)
 
+SELECT e.EMPLOYEE_ID, e.JOB_ID
+FROM EMPLOYEES E,job_history J
+WHERE e.employee_id = j.employee_id AND e.job_id = j.job_id;
+
 -- 각 사원별 소속 부서에서 자신보다 늦게 고용되었으나 보다 많은 연봉을 받는 사원이 존재하는 모든 사원들의 LAST_NAME을 조회
 -- (EMPLOYEES SELF JOIN)
+
+SELECT E1.EMPLOYEE_ID, E1.FIRST_NAME ||''|| E1.LAST_NAME AS NAME
+FROM EMPLOYEES E1,employees E2
+WHERE E1.department_ID = E2.department_id AND E1.HIRE_DATE < E2.HIRE_DATE AND e1.SALARY < E2.SALARY;

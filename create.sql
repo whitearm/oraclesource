@@ -1,0 +1,92 @@
+CREATE TABLE TEST(
+    ID NUMBER(4),
+    NAME VARCHAR2(3));
+DESC TEST;
+
+
+INSERT INTO TEST VALUES(1000,'홍길동');
+INSERT INTO TEST VALUES(1000,'ABC');
+
+-- 언어마다 서로 다른 BYTE 처리를 보완하기 위해 nchar, nvarchar2
+drop table test2;
+
+CREATE TABLE TEST2(
+    ID NUMBER(4),
+    NAME NVARCHAR2(3));
+-- 크기가 모자라 오류가 나옴
+INSERT INTO TEST2 VALUES('황보강성','홍길동');
+
+drop table test2;
+
+-- NCHAR, NVARCHAR2 차이 : 고정된 길이를 항상 가지고 있느냐 아니냐 차이
+-- NCHAR 경우에는 글자가 1 만 입력이 되도 4자리를 항상 유지
+CREATE TABLE TEST2(
+    ID NCHAR(4),
+    NAME NVARCHAR2(3));
+
+INSERT INTO TEST2 VALUES('황보강성','홍길동');
+
+CREATE TABLE TEST3(
+    ID NVARCHAR2(4),
+    NAME NVARCHAR2(4),
+    REG_DATE DATE);
+    
+INSERT INTO TEST3 VALUES('황보강성','홍길동',SYSDATE);
+INSERT INTO TEST3 VALUES('황보강성','홍길동','2020-11-09');
+
+
+
+--테이블 생성하기 
+--CREATE TABLE 테이블명(열이름 타입,......);
+--CREATE TABLE 테이블명 AS SELECT * FROM EMP;
+--CREATE TABLE 테이블명 AS SELECT * FROM EMP WHERE DEPTNO=20;
+--CREATE TABLE 테이블명 AS SELECT * FROM EMP WHERE 1<>1;
+
+DESC EMP;
+
+CREATE TABLE EMP_DDL(
+    EMPNO NUMBER(4),
+    ENAME VARCHAR2(10),
+    JOB VARCHAR2(9),
+    MGR NUMBER(4),
+    HIREDATE DATE,
+    SAL NUMBER(7,2),
+    COMM NUMBER(7,2),
+    DEPTNO NUMBER(2));
+    
+--ALTER : 테이블 변경
+
+-- 컬럼 추가
+ALTER TABLE EMP_DDL ADD HP VARCHAR2(20);
+
+-- 기존 컬럼명 변경
+ALTER TABLE EMP_DDL RENAME COLUMN HP TO TEL;
+
+--기존 타입 변경
+ALTER TABLE EMP_DDL MODIFY EMPNO NUMBER(5);
+
+-- 기존 컬럼 삭제
+ALTER TABLE EMP_DDL DROP COLUMN TEL;
+
+-- 테이블 명 변경
+RENAME EMP_DDL TO EMP_RENAME;
+
+DESC EMP_RENAME;
+
+
+-- ppt 문제
+CREATE TABLE member(
+    id CHAR(8),
+    name VARCHAR2(10),
+    addr NVARCHAR2(50),
+    nation NCHAR(4),
+    email VARCHAR2(50),
+    age number(7,2));
+    
+    ALTER TABLE MEMBER ADD BIGO VARCHAR2(20);
+    
+    ALTER TABLE MEMBER MODIFY BIGO VARCHAR2(30);
+    
+    ALTER TABLE MEMBER RENAME COLUMN BIGO TO REMARK;
+    
+    DROP TABLE MEMBER;
